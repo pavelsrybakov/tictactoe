@@ -19,38 +19,7 @@ public class Main {
         // print field state
         printField();
 
-        // Check wins and impossible
-        int threeXInHRow = checkThreeInHRow('X');
-        int threeXInWRow = checkThreeInWRow('X');
-        int threeOInHRow = checkThreeInHRow('O');
-        int threeOInWRow = checkThreeInWRow('O');
-        int threeXInDiagonal = checkThreeInDiagonal('X');
-        int threeOInDiagonal = checkThreeInDiagonal('O');
-        int numberOfX = calculateSymbol('X');
-        int numberOfO = calculateSymbol('O');
-        int numberOfEmpty = calculateSymbol('_');
-        String state = "";
-        // Check states
-        if (numberOfX - numberOfO >= 2 || numberOfO - numberOfX >= 2 || (threeXInHRow > 0 && threeOInHRow >0 ) || (threeXInWRow > 0 && threeOInWRow > 0)) {
-            state = "Impossible";
-        }
-        if ((threeXInHRow == 1 || threeXInWRow == 1 || threeXInDiagonal == 1) && state == "")
-        {
-            state = "X wins";
-        }
-        if ((threeOInHRow == 1 || threeOInWRow == 1 || threeOInDiagonal == 1) && state == "")
-        {
-            state = "O wins";
-        }
-        if (numberOfEmpty > 0 && state == "")
-        {
-            state = "Game not finished";
-        }
-        if ((threeXInHRow == 0 || threeXInWRow == 0) && numberOfEmpty == 0 && state == "")
-        {
-            state = "Draw";
-        }
-        System.out.println(state);
+        System.out.println(checkState());
 
     }
 
@@ -115,5 +84,43 @@ public class Main {
             }
         }
         return counter;
+    }
+
+    public static String checkState() {
+
+        // Check wins and impossible
+        int threeXInHRow = checkThreeInHRow('X');
+        int threeXInWRow = checkThreeInWRow('X');
+        int threeOInHRow = checkThreeInHRow('O');
+        int threeOInWRow = checkThreeInWRow('O');
+        int threeXInDiagonal = checkThreeInDiagonal('X');
+        int threeOInDiagonal = checkThreeInDiagonal('O');
+        int numberOfX = calculateSymbol('X');
+        int numberOfO = calculateSymbol('O');
+        int numberOfEmpty = calculateSymbol('_');
+        String state = "";
+        // Check states
+        if (numberOfX - numberOfO >= 2 || numberOfO - numberOfX >= 2 || (threeXInHRow > 0 && threeOInHRow >0 ) || (threeXInWRow > 0 && threeOInWRow > 0)) {
+            state = "Impossible";
+        }
+        if ((threeXInHRow == 1 || threeXInWRow == 1 || threeXInDiagonal == 1) && state == "")
+        {
+            state = "X wins";
+        }
+        if ((threeOInHRow == 1 || threeOInWRow == 1 || threeOInDiagonal == 1) && state == "")
+        {
+            state = "O wins";
+        }
+        if (numberOfEmpty > 0 && state == "")
+        {
+            state = "Game not finished";
+        }
+        if ((threeXInHRow == 0 || threeXInWRow == 0) && numberOfEmpty == 0 && state == "")
+        {
+            state = "Draw";
+        }
+
+        return state;
+
     }
 }
