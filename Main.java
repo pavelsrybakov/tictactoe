@@ -10,17 +10,47 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        char symbol = 'X';
+        // print field state
+        getFieldFromString("_________");
+        printField();
+        while (checkState() == "Game not finished") {
+            System.out.print("Enter the coordinates: ");
+            String row = scanner.next();
+            String column = scanner.next();
+            if (checkInt(row) && checkInt(column)) {
+                if (checkCoordinates(Integer.parseInt(row), Integer.parseInt(column), symbol)) {
+                    printField();
+                    symbol = changeSymbol(symbol);
+                    continue;
+                };
+            } else {
+                System.out.println("You should enter numbers!");
+                continue;
+            }
+        }
+        System.out.println(checkState());
+
+    }
+
+    public static void getFieldFromString(String line) {
+        for (int i = 0; i < FIELD_HEIGHT; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                field[i][j] = line.charAt(i * 3 + j);
+            }
+        }
+    }
+
+    public static void getFieldFromInput() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter cells: ");
+        // fill in field state from the input
         String line = scanner.nextLine();
         for (int i = 0; i < FIELD_HEIGHT; i++) {
             for (int j = 0; j < FIELD_WIDTH; j++) {
                 field[i][j] = line.charAt(i * 3 + j);
             }
         }
-        // print field state
-        printField();
-
-        System.out.println(checkState());
-
     }
 
     public static void printField() {
@@ -121,6 +151,38 @@ public class Main {
         }
 
         return state;
+
+    }
+
+    public static boolean checkCoordinates(int row, int column, char symbol) {
+
+        if (row < 1 || row > 3 || column < 1 || column > 3) {
+            System.out.println("Coordinates should be from 1 to 3!");
+            return false;
+        }
+        if (field[row-1][column-1] == 'X' || field[row-1][column-1] == 'O') {
+            System.out.println("This cell is occupied! Choose another one!");
+            return false;
+        }
+        field[row-1][column-1] = symbol;
+        return true;
+    }
+
+    public static boolean checkInt(String checkedValue) {
+        for (int i = 0; i < checkedValue.length(); i++) {
+            if (checkedValue.charAt(i) < 47 || checkedValue.charAt(i) > 58) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static char changeSymbol (char symbol) {
+        if (symbol == 'X') {
+            return 'O';
+        } else {
+            return 'X';
+        }
 
     }
 }
